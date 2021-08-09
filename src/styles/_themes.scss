@@ -1,0 +1,23 @@
+@import './theme/dark.scss', './theme/light.scss';
+
+@function addOpacityColor($color) {
+    $temp: $color;
+
+    @each $key,
+    $value in $color {
+        @if type-of($value)==color {
+            @for $i from 0 to 10 {
+                $temp: map-merge($temp, (#{$key + '-' + $i}: rgba($value, 0.1 * $i)));
+            }
+        }
+    }
+
+    @return $temp;
+}
+
+$dark : addOpacityColor($dark);
+$light: addOpacityColor($light);
+
+$themes: ('dark': $dark,
+    'light': $light,
+);
