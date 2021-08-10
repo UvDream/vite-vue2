@@ -2,13 +2,15 @@
  * @Author: wangzhongjie
  * @Date: 2021-07-02 09:25:11
  * @LastEditors: wangzhongjie
- * @LastEditTime: 2021-08-09 15:33:52
+ * @LastEditTime: 2021-08-10 14:18:40
  * @Description: home
  * @Email: UvDream@163.com
 -->
 <template>
   <div class="home">
     home
+    <Editor :value="markdownValue" @change="handleChange" />
+    <Viewer v-model="markdownValue" />
     <div v-for="(value, key, index) in colors" :key="index">
       {{ key }}
     </div>
@@ -16,10 +18,13 @@
 </template>
 
 <script>
+import "@uvdream/bytemd-plugin-vu2/styles/index.scss";
+// import "bytemd/dist/index.min.css";
 export default {
   props: {},
   data() {
     return {
+      markdownValue: "",
       colors: {
         red: [
           "#e6ffff",
@@ -40,7 +45,12 @@ export default {
   created() {},
   mounted() {},
   watch: {},
-  methods: {},
+  methods: {
+    handleChange(val) {
+      this.$emit("input", val);
+      this.markdownValue = val;
+    },
+  },
   components: {},
 };
 </script>
@@ -49,7 +59,7 @@ export default {
 .home {
   @include themeify() {
     outline: 1px solid red;
-    color: themed(color);
+    // color: themed(color);
   }
 }
 </style>
